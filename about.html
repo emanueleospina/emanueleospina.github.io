@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Emanuele Ospina</title>
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 5rem;
+      align-items: start;
+      margin-bottom: 5rem;
+    }
+
+    .about-text p { margin-bottom: 1.1rem; color: var(--ink); }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    /* Photo placeholder */
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-placeholder {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Interests */
+    .interests {
+      border-top: 1px solid var(--border);
+      padding-top: 3.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .interest-item {}
+
+    .interest-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.7rem;
+      opacity: 0.7;
+    }
+
+    .interest-title {
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+      font-size: 1rem;
+    }
+
+    .interest-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Currently */
+    .currently {
+      border-top: 1px solid var(--border);
+      padding-top: 3.5rem;
+    }
+
+    .currently-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .currently-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .currently-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-top: 0.2rem;
+    }
+
+    @media (max-width: 680px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-photo { aspect-ratio: 1/1; }
+      .interests-grid { grid-template-columns: 1fr 1fr; }
+      .currently-item { grid-template-columns: 80px 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">E. Ospina</a>
+  <ul class="nav-links">
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="notes.html">Notes</a></li>
+    <li><a href="cv.html">CV</a></li>
+  </ul>
+</nav>
+
+<main class="page">
+
+  <div class="label reveal">About</div>
+
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        I'm Emanuele — MSc Finance graduate and currently in my third year of a Mathematics degree at Universidad Complutense de Madrid.
+      </p>
+      <p>
+        My background sits at the crossroads of finance and mathematics. I spent the first years of my career thinking about markets and risk; now I'm spending time going deeper into the mathematical foundations that make it all rigorous.
+      </p>
+      <p>
+        I'm drawn to problems where structure matters — whether that's the structure of a probability space, a financial market, or a dataset. I code mainly in Python and R, and I write in LaTeX more than I'd like to admit.
+      </p>
+      <p>
+        Outside of academics, I follow markets closely, read widely across mathematics and economics, and try to keep up with the literature on stochastic processes and their applications.
+      </p>
+      <p style="color: var(--muted); font-style: italic;">
+        Based in Madrid, Spain. Open to conversations about quant research, model development, or anything at the intersection of math and finance.
+      </p>
+      <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="mailto:emanuele532@gmail.com" class="btn filled">Get in touch</a>
+        <a href="cv.html" class="btn">View CV</a>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="about-photo">
+        <!-- Replace with: <img src="photo.jpg" alt="Emanuele Ospina" /> -->
+        <div class="photo-placeholder">Your photo here<br><span style="opacity:0.5; font-size:0.55rem;">Replace src in the HTML</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interests -->
+  <div class="interests reveal">
+    <div class="label" style="margin-bottom: 2rem;">Interests</div>
+    <div class="interests-grid">
+      <div class="interest-item">
+        <div class="interest-icon">∫</div>
+        <div class="interest-title">Stochastic Calculus</div>
+        <div class="interest-desc">Itô processes, SDEs, martingales — the mathematical language of randomness in continuous time.</div>
+      </div>
+      <div class="interest-item">
+        <div class="interest-icon">◈</div>
+        <div class="interest-title">Quantitative Finance</div>
+        <div class="interest-desc">Derivatives pricing, portfolio theory, and the structure of financial markets.</div>
+      </div>
+      <div class="interest-item">
+        <div class="interest-icon">⬡</div>
+        <div class="interest-title">Topology</div>
+        <div class="interest-desc">Algebraic and applied topology, including TDA and its uses in data analysis.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Currently -->
+  <div class="currently reveal">
+    <div class="label" style="margin-bottom: 2rem;">Currently</div>
+    <div class="currently-list">
+      <div class="currently-item">
+        <span class="currently-label">Studying</span>
+        <span>3rd year of Mathematics at UCM — taking courses in real analysis, topology, and numerical methods</span>
+      </div>
+      <div class="currently-item">
+        <span class="currently-label">Building</span>
+        <span>A TDA-based regime detection model for financial time series</span>
+      </div>
+      <div class="currently-item">
+        <span class="currently-label">Reading</span>
+        <span><em>Shreve — Stochastic Calculus for Finance II</em> and Munkres' <em>Topology</em></span>
+      </div>
+      <div class="currently-item">
+        <span class="currently-label">Looking for</span>
+        <span>Internship or research opportunities in quantitative finance or applied mathematics</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-copy">© 2025 Emanuele Ospina</div>
+  <div class="footer-links">
+    <a href="https://linkedin.com/in/emanuele-ospina-castellanos/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/manu7zgz" target="_blank">GitHub</a>
+    <a href="mailto:emanuele532@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>

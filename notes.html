@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notes — Emanuele Ospina</title>
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .notes-intro {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.8;
+      margin-bottom: 3.5rem;
+    }
+
+    /* Notes list */
+    .notes-list { display: flex; flex-direction: column; }
+
+    .note-card {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 2rem;
+      align-items: start;
+      cursor: pointer;
+      transition: padding-left 0.25s;
+    }
+
+    .note-card:last-child { border-bottom: 1px solid var(--border); }
+    .note-card:hover { padding-left: 0.6rem; }
+    .note-card:hover .note-title { color: var(--accent); }
+
+    .note-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .note-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .note-category {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      background: var(--tag-bg);
+      color: var(--muted);
+      border-radius: 2px;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    .note-title {
+      font-size: 1.15rem;
+      font-weight: 400;
+      margin-bottom: 0.45rem;
+      transition: color 0.2s;
+      line-height: 1.4;
+    }
+
+    .note-excerpt { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(26,24,20,0.6);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--bg);
+      max-width: 700px;
+      width: 100%;
+      max-height: 84vh;
+      overflow-y: auto;
+      padding: 3.5rem;
+      position: relative;
+      transform: translateY(24px);
+      transition: transform 0.3s;
+    }
+
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      background: none;
+      border: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover { color: var(--ink); }
+
+    .modal-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+
+    .modal-title { font-size: 1.9rem; font-weight: 400; margin-bottom: 0.5rem; line-height: 1.25; }
+
+    .modal-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-bottom: 2.2rem;
+      letter-spacing: 0.08em;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-body { font-size: 1rem; line-height: 1.85; color: var(--ink); }
+    .modal-body p { margin-bottom: 1.1rem; }
+    .modal-body h3 { font-size: 1.05rem; font-weight: 500; margin: 2rem 0 0.7rem; }
+    .modal-body em { font-style: italic; color: var(--muted); }
+
+    @media (max-width: 680px) {
+      .note-card { grid-template-columns: 1fr; gap: 0.5rem; }
+      .modal { padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">E. Ospina</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="notes.html" class="active">Notes</a></li>
+    <li><a href="cv.html">CV</a></li>
+  </ul>
+</nav>
+
+<main class="page">
+
+  <div class="label reveal">Notes &amp; Learning</div>
+
+  <p class="notes-intro reveal">
+    Reflections on mathematics, models, and what I pick up along the way in my degree. Brief, honest, unpolished — written mostly for myself, but shared in case they're useful.
+  </p>
+
+  <div class="notes-list">
+
+    <div class="note-card reveal" onclick="openModal('n1')">
+      <div class="note-meta">
+        <span class="note-date">Jan 2025</span>
+        <span class="note-category">Probability</span>
+      </div>
+      <div>
+        <div class="note-title">Why measure-theoretic probability changed how I think about everything</div>
+        <p class="note-excerpt">Measure theory in second year. At first it felt like abstraction for its own sake. Then I understood it was the only correct language for doing probability properly...</p>
+      </div>
+    </div>
+
+    <div class="note-card reveal" onclick="openModal('n2')">
+      <div class="note-meta">
+        <span class="note-date">Feb 2025</span>
+        <span class="note-category">Stochastic Calculus</span>
+      </div>
+      <div>
+        <div class="note-title">Itô's lemma and the intuition nobody gives you in class</div>
+        <p class="note-excerpt">When Itô's lemma appears in stochastic calculus, most of us memorise the formula. What nobody explains well is why (dt)² ≠ 0 for Brownian motion...</p>
+      </div>
+    </div>
+
+    <div class="note-card reveal" onclick="openModal('n3')">
+      <div class="note-meta">
+        <span class="note-date">Mar 2025</span>
+        <span class="note-category">Numerical Methods</span>
+      </div>
+      <div>
+        <div class="note-title">Numerical linear algebra: what separates slow code from fast code</div>
+        <p class="note-excerpt">Implementing the same LU factorisation three different ways gave 500x differences in runtime. Notes on LAPACK, BLAS, and why the implementation layer matters...</p>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-copy">© 2025 Emanuele Ospina</div>
+  <div class="footer-links">
+    <a href="https://linkedin.com/in/emanuele-ospina-castellanos/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/manu7zgz" target="_blank">GitHub</a>
+    <a href="mailto:emanuele532@gmail.com">Email</a>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">Close ×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  const notes = {
+    n1: {
+      label: 'Class note · Probability Theory',
+      date: 'January 2025',
+      title: 'Why measure-theoretic probability changed how I think about everything',
+      body: `
+        <p>When second-year mathematics starts with measure theory, the natural reaction is resistance. Why do we need sigma-algebras if we already had classical probability? I thought exactly that for the first three weeks.</p>
+        <h3>The problem with naive probability</h3>
+        <p>The probability we learn first works on finite or discrete spaces. When we move to continuous random variables, we start doing things we can't properly justify: integrating "over all reals", assigning zero probability to a single point but not to an interval...</p>
+        <p>Measure theory fixes this at the root. A probability measure is a function μ from subsets of the sample space to [0,1] satisfying σ-additivity. It sounds dry, but it's the only way to do things correctly.</p>
+        <h3>Why it matters in finance</h3>
+        <p>The fundamental theorem of asset pricing says that no-arbitrage holds if and only if there exists an equivalent probability measure (the risk-neutral measure Q) under which discounted prices are martingales. Without measure theory, that sentence means nothing. With it, everything clicks.</p>
+        <p><em>This also made me understand why quant textbooks assume so much measure theory upfront — it's not gatekeeping, it's just the necessary foundation.</em></p>
+      `
+    },
+    n2: {
+      label: "Class note · Stochastic Calculus",
+      date: 'February 2025',
+      title: "Itô's lemma and the intuition nobody gives you in class",
+      body: `
+        <p>Itô's lemma is the central result of stochastic calculus. If X follows an Itô process and we have a smooth function f(t, X), the lemma tells us how f evolves. The formula includes an extra term that doesn't exist in ordinary calculus: the second-order correction (1/2)·f″·σ²·dt.</p>
+        <h3>Why does that term appear?</h3>
+        <p>In classical calculus, when we do a Taylor expansion we discard terms of order ≥ 2 because (dx)² → 0 as dx → 0. But for Brownian motion, the quadratic variation is non-zero: (dW)² = dt in the L² sense. Brownian motion oscillates so rapidly that its square accumulates finite variation. We cannot discard it.</p>
+        <h3>The immediate application</h3>
+        <p>If a stock price follows GBM: dS = μS dt + σS dW, and we want to model the log-price Z = ln(S), we apply Itô and get:</p>
+        <p style="font-family: 'DM Mono', monospace; font-size: 0.85rem; padding: 1rem; background: var(--tag-bg); margin: 1rem 0;">dZ = (μ − σ²/2) dt + σ dW</p>
+        <p>That −σ²/2 is the Itô correction. Without understanding it, Black-Scholes looks like magic. With it, it's a direct consequence of the stochastic chain rule.</p>
+      `
+    },
+    n3: {
+      label: 'Technical note · Numerical Methods',
+      date: 'March 2025',
+      title: 'Numerical linear algebra: what separates slow code from fast code',
+      body: `
+        <p>I implemented the same LU factorisation three ways: plain Python loops, NumPy, and scipy.linalg.lu. Timings for a 1000×1000 matrix: 47 seconds, 0.8 seconds, 0.09 seconds. A factor of over 500x between worst and best.</p>
+        <h3>Why implementation matters so much</h3>
+        <p>NumPy and SciPy call LAPACK/BLAS routines written in Fortran and C, optimised to exploit CPU cache and SIMD vector operations. Plain Python can't compete because of per-operation interpreter overhead — each line of Python carries significant fixed cost regardless of how simple the operation is.</p>
+        <h3>Practical lesson</h3>
+        <p>When building portfolio optimisation models or simulating price paths, matrices can get large. A bad implementation choice can mean the difference between a script that runs in seconds and one that runs for hours. Learning numerical linear algebra isn't just theory — it's writing code that actually works at scale.</p>
+        <p>The rule I follow now: never implement from scratch what already exists in scipy. And if you need more speed, look at JAX or Numba before rewriting in C.</p>
+        <p><em>Side note: this also made me much more careful about memory layout. Column-major vs row-major access patterns can add another 2-5x on top of everything else.</em></p>
+      `
+    }
+  };
+
+  function openModal(id) {
+    const note = notes[id];
+    if (!note) return;
+    document.getElementById('modalBody').innerHTML = `
+      <div class="modal-label">${note.label}</div>
+      <h2 class="modal-title">${note.title}</h2>
+      <div class="modal-meta">${note.date}</div>
+      <div class="modal-body">${note.body}</div>
+    `;
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+
+</body>
+</html>

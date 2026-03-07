@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV — Emanuele Ospina</title>
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .cv-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4rem;
+      gap: 2rem;
+    }
+
+    .cv-header-left h1 {
+      font-size: 2.8rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .cv-header-left h1 em { font-style: italic; color: var(--accent); }
+
+    .cv-tagline {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .cv-contacts {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .cv-contact-item {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+
+    .cv-contact-item:hover { color: var(--accent); }
+
+    /* Section */
+    .cv-section { margin-bottom: 3.5rem; }
+
+    .cv-section-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.7rem;
+      margin-bottom: 2rem;
+    }
+
+    .cv-entry {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .cv-entry:last-child { margin-bottom: 0; }
+
+    .cv-period {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      padding-top: 0.25rem;
+      line-height: 1.5;
+    }
+
+    .cv-role { font-weight: 500; margin-bottom: 0.2rem; font-size: 1rem; }
+    .cv-org { font-style: italic; color: var(--muted); font-size: 0.95rem; margin-bottom: 0.6rem; }
+    .cv-detail { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .skill-group-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .skill-list { font-size: 0.9rem; line-height: 2; color: var(--ink); }
+
+    /* Download CTA */
+    .cv-cta {
+      border-top: 1px solid var(--border);
+      padding-top: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .cv-cta-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .cv-cta-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    @media (max-width: 680px) {
+      .cv-header { flex-direction: column; }
+      .cv-entry { grid-template-columns: 1fr; gap: 0.3rem; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .cv-cta { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">E. Ospina</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="notes.html">Notes</a></li>
+    <li><a href="cv.html" class="active">CV</a></li>
+  </ul>
+</nav>
+
+<main class="page">
+
+  <div class="label reveal">Résumé</div>
+
+  <div class="cv-header reveal">
+    <div class="cv-header-left">
+      <h1>Emanuele <em>Ospina</em></h1>
+      <p class="cv-tagline">MSc Finance · Mathematics Student · Quant Analyst Candidate</p>
+      <div class="cv-contacts">
+        <a href="mailto:emanuele532@gmail.com" class="cv-contact-item">emanuele532@gmail.com</a>
+        <span class="cv-contact-item">+34 676 804 023</span>
+        <a href="https://linkedin.com/in/emanuele-ospina-castellanos/" target="_blank" class="cv-contact-item">LinkedIn</a>
+        <a href="https://github.com/manu7zgz" target="_blank" class="cv-contact-item">GitHub</a>
+        <span class="cv-contact-item">Madrid, Spain</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Education -->
+  <div class="cv-section reveal">
+    <div class="cv-section-title">Education</div>
+
+    <div class="cv-entry">
+      <div class="cv-period">2023 — Present</div>
+      <div>
+        <div class="cv-role">BSc Mathematics</div>
+        <div class="cv-org">Universidad Complutense de Madrid</div>
+        <div class="cv-detail">Focus on mathematical analysis and probability theory. Courses include real analysis, topology, numerical methods, and algebra. Interest in algebraic topology and dynamical systems.</div>
+      </div>
+    </div>
+
+    <div class="cv-entry">
+      <div class="cv-period">2022 — 2023</div>
+      <div>
+        <div class="cv-role">MSc in Finance</div>
+        <div class="cv-org">IE Business School, Madrid</div>
+        <div class="cv-detail">Quantitative finance, risk management, and derivatives markets. Coursework in portfolio theory, fixed income, and financial econometrics. Master's thesis on volatility strategies.</div>
+      </div>
+    </div>
+
+    <div class="cv-entry">
+      <div class="cv-period">2018 — 2022</div>
+      <div>
+        <div class="cv-role">BBA — Business Administration &amp; Management</div>
+        <div class="cv-org">Universidad de Zaragoza</div>
+        <div class="cv-detail">Specialisation in corporate finance. Graduated with distinction.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Experience -->
+  <div class="cv-section reveal">
+    <div class="cv-section-title">Experience</div>
+
+    <div class="cv-entry">
+      <div class="cv-period">2023</div>
+      <div>
+        <div class="cv-role">Analyst Intern</div>
+        <div class="cv-org">Advantere School of Management, Madrid</div>
+        <div class="cv-detail">Portfolio analysis and support on financial research projects. Worked on quantitative models for asset allocation and developed internal reporting tools in Python.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects highlight -->
+  <div class="cv-section reveal">
+    <div class="cv-section-title">Selected Projects</div>
+
+    <div class="cv-entry">
+      <div class="cv-period">2024</div>
+      <div>
+        <div class="cv-role">Portfolio Optimisation with CVaR Constraints</div>
+        <div class="cv-detail">Extended Markowitz framework with tail-risk constraints. Backtested on global indices 2010–2023. Python, cvxpy.</div>
+      </div>
+    </div>
+
+    <div class="cv-entry">
+      <div class="cv-period">2024</div>
+      <div>
+        <div class="cv-role">Monte Carlo Pricing for Exotic Options</div>
+        <div class="cv-detail">Barrier and Asian option pricing under GBM, Heston, SABR. Variance reduction via antithetic and control variates. Python.</div>
+      </div>
+    </div>
+
+    <div class="cv-entry">
+      <div class="cv-period">2025</div>
+      <div>
+        <div class="cv-role">TDA Applied to Financial Regime Detection</div>
+        <div class="cv-detail">Persistent homology on sliding windows over price series to detect regime changes. R, TDA package.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <div class="cv-section reveal">
+    <div class="cv-section-title">Technical Skills</div>
+    <div class="skills-grid">
+      <div>
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-list">Python<br>R<br>MATLAB<br>SQL<br>LaTeX</div>
+      </div>
+      <div>
+        <div class="skill-group-title">Mathematics</div>
+        <div class="skill-list">Stochastic calculus<br>Convex optimisation<br>Bayesian statistics<br>Linear algebra<br>Topology</div>
+      </div>
+      <div>
+        <div class="skill-group-title">Libraries</div>
+        <div class="skill-list">NumPy / pandas<br>cvxpy<br>scikit-learn<br>SciPy<br>JAX</div>
+      </div>
+      <div>
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-list">Spanish (native)<br>Italian (native)<br>English (C1)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Download -->
+  <div class="cv-cta reveal">
+    <p class="cv-cta-text">Want the full version as a PDF?</p>
+    <div class="cv-cta-actions">
+      <!-- 🔗 Replace with your actual CV PDF path once uploaded -->
+      <a href="cv.pdf" class="btn filled">Download CV (PDF)</a>
+      <a href="mailto:emanuele532@gmail.com" class="btn">Get in touch</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-copy">© 2025 Emanuele Ospina</div>
+  <div class="footer-links">
+    <a href="https://linkedin.com/in/emanuele-ospina-castellanos/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/manu7zgz" target="_blank">GitHub</a>
+    <a href="mailto:emanuele532@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 90);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
