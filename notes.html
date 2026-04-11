@@ -172,18 +172,18 @@
 
     <div class="note-card reveal" onclick="openModal('n1')">
       <div class="note-meta">
-        <span class="note-date">Jan 2025</span>
+        <span class="note-date">Mar 2026</span>
         <span class="note-category">Probability</span>
       </div>
       <div>
-        <div class="note-title">Why measure-theoretic probability changed how I think about everything</div>
-        <p class="note-excerpt">Measure theory in second year. At first it felt like abstraction for its own sake. Then I understood it was the only correct language for doing probability properly...</p>
+        <div class="note-title">Reflections on the Geometry of the Heart: A Riemann Sum Approach</div>
+        <p class="note-excerpt">Mathematics often feels like a series of abstract rules, but this project on the Riemann Integral reminded me that it is, at its core, a language for...</p>
       </div>
     </div>
 
     <div class="note-card reveal" onclick="openModal('n2')">
       <div class="note-meta">
-        <span class="note-date">Feb 2025</span>
+        <span class="note-date">Feb 2026</span>
         <span class="note-category">Stochastic Calculus</span>
       </div>
       <div>
@@ -194,7 +194,7 @@
 
     <div class="note-card reveal" onclick="openModal('n3')">
       <div class="note-meta">
-        <span class="note-date">Mar 2025</span>
+        <span class="note-date">Jan 2026</span>
         <span class="note-category">Numerical Methods</span>
       </div>
       <div>
@@ -211,7 +211,7 @@
   <div class="footer-copy">© 2025 Emanuele Ospina</div>
   <div class="footer-links">
     <a href="https://linkedin.com/in/emanuele-ospina-castellanos/" target="_blank">LinkedIn</a>
-    <a href="https://github.com/manu7zgz" target="_blank">GitHub</a>
+    <a href="https://github.com/emanueleospina" target="_blank">GitHub</a>
     <a href="mailto:emanuele532@gmail.com">Email</a>
   </div>
 </footer>
@@ -237,17 +237,21 @@
 
   const notes = {
     n1: {
-      label: 'Class note · Probability Theory',
-      date: 'January 2025',
-      title: 'Why measure-theoretic probability changed how I think about everything',
+      label: 'Riemann Integral',
+      date: 'March 2026',
+      title: 'Reflections on the Geometry of the Heart: A Riemann Sum Approach',
       body: `
-        <p>When second-year mathematics starts with measure theory, the natural reaction is resistance. Why do we need sigma-algebras if we already had classical probability? I thought exactly that for the first three weeks.</p>
-        <h3>The problem with naive probability</h3>
-        <p>The probability we learn first works on finite or discrete spaces. When we move to continuous random variables, we start doing things we can't properly justify: integrating "over all reals", assigning zero probability to a single point but not to an interval...</p>
-        <p>Measure theory fixes this at the root. A probability measure is a function μ from subsets of the sample space to [0,1] satisfying σ-additivity. It sounds dry, but it's the only way to do things correctly.</p>
-        <h3>Why it matters in finance</h3>
-        <p>The fundamental theorem of asset pricing says that no-arbitrage holds if and only if there exists an equivalent probability measure (the risk-neutral measure Q) under which discounted prices are martingales. Without measure theory, that sentence means nothing. With it, everything clicks.</p>
-        <p><em>This also made me understand why quant textbooks assume so much measure theory upfront — it's not gatekeeping, it's just the necessary foundation.</em></p>
+        <p>Mathematics often feels like a series of abstract rules, but this project on the Riemann Integral reminded me that it is, at its core, a language for defining the world. My task was to design a heart-shaped capsule (a F@rmaTec design) and calculate its area using numerical approximations.</p>
+        <h3>The Precision of Closure</h3>
+        <p>The project began by defining the "boundary" of the heart using two distinct functions: f(x) for the upper semicircles and g(x) for the lower curve. What I found most interesting was the calculation of the closure parameter K. By enforcing continuity at the edges of the domain (x=2), I determined that K=π is the specific value required to "seal" the shape. It’s a small detail that highlights how calculus ensures structural integrity in design</p>
+        <h3>Bridging the Gap: Riemann Sums</h3>
+        <p>To find the area, I utilized Midpoint Riemann Sums. Watching the approximations converge as the number of subintervals (n) increased was a perfect visual lesson in limits:</p>
+        <p>- At n=10, the area was roughly 9.51</p>
+        <p>- At n=40, it narrowed down to 9.428</p>
+        <p>Comparing these to the analytical area of 3π (≈9.4247) shows just how powerful these "simple" rectangles are when pushed toward infinity.</p>
+        <h3>From Theory to the Real World</h3>
+        <p>The final exercise—Dimensioning for Packaging—was the most grounding. Calculating the side of a square blister (l≈3.07) or the dimensions of a bounding box (4.0 x 4.14) transformed an equation on a page into a tangible object. It’s a reminder that every product we hold—even a heart-shaped pill—is the result of these precise mathematical boundaries.</p>
+        
       `
     },
     n2: {
