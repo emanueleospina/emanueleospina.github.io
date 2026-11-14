@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>A320ceo Lease Risk</title>
-<meta name="description" content="Interactive Monte Carlo: pricing lessee credit risk on a mid-life A320ceo when jet fuel drives default, re-lease rents and residual values together.">
+<title>Distressed Lease Pricing</title>
+<meta name="description" content="Interactive Monte Carlo: what entry price makes a lease-attached A320ceo with a distressed lessee worth buying, when jet fuel drives default, re-lease rents and residual values together.">
 <style>
 :root{
   --bg:#fbfaf7;--surface:#ffffff;--ink:#1f1f1e;--ink2:#55544f;--muted:#8a897f;--rule:#e3e2dc;
@@ -24,6 +24,8 @@ h1{font-size:clamp(28px,4.4vw,44px);line-height:1.08;letter-spacing:-.02em;margi
 .lede{font-size:17px;color:var(--ink2);max-width:62ch;margin:0}
 .byline{margin-top:18px;font-size:13px;color:var(--muted)}
 .byline a{color:var(--ink2)}
+.dl{display:inline-block;margin-top:16px;padding:10px 16px;border-radius:8px;background:var(--ink);color:var(--bg);text-decoration:none;font-size:14px;font-weight:600}
+.dl:hover{opacity:.88}
 .findings{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin:36px 0}
 .finding{background:var(--surface);padding:20px}
 .finding .n{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
@@ -68,30 +70,33 @@ table.sc th{color:var(--muted);font-weight:600}
 footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);font-size:12px;color:var(--muted)}
 .busy{opacity:.5;transition:opacity .15s}
 @media (max-width:860px){.lab{grid-template-columns:1fr}.findings{grid-template-columns:1fr}section.notes{grid-template-columns:1fr}}
-@media (max-width:480px){.wrap{padding:28px 16px 48px}}
+section.notes>div,.lab>div{min-width:0}
+.scwrap{overflow-x:auto}
+@media (max-width:480px){.wrap{padding:28px 16px 48px}table.sc{font-size:11px}table.sc th,table.sc td{padding:5px 3px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
   <div class="kicker">Aviation finance · Credit risk · Monte Carlo</div>
-  <h1>Pricing lessee credit risk when fuel drives everything</h1>
-  <p class="lede">A mid-life A320ceo with five years left on its lease. One version is leased to IAG (BBB). The other to Volotea, which entered pre-insolvency in September 2026 citing jet fuel. Same aircraft, higher rent. Is the premium worth it?</p>
+  <h1>Buying a distressed lease: fuel risk sets the entry price</h1>
+  <p class="lede">A secondary-market purchase of a mid-life A320ceo with five years left on an existing lease. On one version the lessee is IAG (BBB). On the other it is Volotea, which entered pre-insolvency in September 2026 citing jet fuel. Its lease was signed before the shock at a higher rent. What should a buyer pay for it?</p>
   <div class="byline">Emanuele Ospina · November 2026 · Illustrative analysis from public data, not investment advice</div>
+  <a class="dl" href="A320ceo_Lease_Credit_Risk_Ospina.pdf" download>Download the 2-page PDF</a>
 </header>
 
 <div class="findings">
-  <div class="finding"><div class="n">01</div><h3>The rent premium hides the risk</h3><p>Volotea's median return beats IAG's, but its worst 5% of outcomes are far worse. Similar averages, very different risk.</p></div>
-  <div class="finding"><div class="n">02</div><h3>Fuel correlates the risks</h3><p>A fuel shock raises default risk, cuts re-lease rents, lengthens downtime and lowers residuals at once. Modelling them separately understates the tail.</p></div>
-  <div class="finding"><div class="n">03</div><h3>The fix is the price, not the rent</h3><p>No carrier in restructuring signs the rent needed to match IAG's tail. A purchase discount does it.</p></div>
+  <div class="finding"><div class="n">01</div><h3>Entry price is where the risk gets paid for</h3><p>The rent is already fixed and no carrier in restructuring will sign a higher one. Matching IAG's tail takes a purchase discount of about 18%.</p></div>
+  <div class="finding"><div class="n">02</div><h3>A higher median can sit on a much worse tail</h3><p>At the same price, Volotea's median beats IAG's and the means are level, but its worst 5% of outcomes lose money.</p></div>
+  <div class="finding"><div class="n">03</div><h3>Independent risks look about 4 points safer than they are</h3><p>A fuel shock raises default risk, cuts re-lease rents, lengthens downtime and lowers residuals at once.</p></div>
 </div>
 
 <div class="lab">
   <aside class="panel" aria-label="Assumptions">
     <h2>Assumptions</h2>
-    <div class="ctl"><label for="price">Purchase price <b id="price-v"></b></label>
+    <div class="ctl"><label for="price">Volotea entry price <b id="price-v"></b></label>
       <input id="price" type="range" min="11" max="22" step="0.1" value="17">
-      <div class="hint">Same aircraft for both lessees</div></div>
+      <div class="hint">IAG benchmark fixed at $17.0M</div></div>
     <div class="ctl"><label for="rentv">Volotea rent / month <b id="rentv-v"></b></label>
       <input id="rentv" type="range" min="200" max="380" step="5" value="240">
       <div class="hint">IAG fixed at $215k</div></div>
@@ -104,12 +109,19 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);font-si
     <div class="ctl"><label for="resid">Residual value, base case <b id="resid-v"></b></label>
       <input id="resid" type="range" min="6" max="16" step="0.5" value="11">
       <div class="hint">18-year-old A320ceo at lease end</div></div>
+    <div class="ctl"><label for="floor">Part-out floor <b id="floor-v"></b></label>
+      <input id="floor" type="range" min="0" max="10" step="0.5" value="6">
+      <div class="hint">Two green-time CFM56-5Bs (~$2.6–3.2M each) plus airframe material</div></div>
+    <div class="ctl"><label for="dep">Volotea security deposit <b id="dep-v"></b></label>
+      <input id="dep" type="range" min="0" max="6" step="1" value="3">
+      <div class="hint">Months of rent kept on default; IAG fixed at 1</div></div>
     <div class="ctl"><label>Risk structure</label>
       <div class="toggle" role="group" aria-label="Risk structure">
         <button id="t-corr" aria-pressed="true">Fuel as common factor</button>
         <button id="t-ind" aria-pressed="false">Independent</button>
       </div></div>
-    <div class="ctl"><button class="btn" id="solve">Solve: price that matches IAG's tail</button></div>
+    <div class="ctl"><button class="btn" id="solve">Solve: price that matches IAG's tail</button>
+      <div class="hint">Moves the price slider to the answer</div></div>
     <button class="reset" id="reset">Reset to base case</button>
   </aside>
 
@@ -119,7 +131,7 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);font-si
       <svg id="chart" viewBox="0 0 760 300" role="img" aria-label="Distribution of unlevered IRR for both leases"></svg>
       <div class="tip" id="tip"></div>
       <table class="stats" aria-label="Summary statistics">
-        <thead><tr><th>Unlevered IRR, 5-year hold</th><th>IAG</th><th>Volotea</th></tr></thead>
+        <thead><tr><th>Unlevered IRR, 5-year hold</th><th>IAG at $17.0M</th><th id="vh">Volotea</th></tr></thead>
         <tbody id="stats"></tbody>
       </table>
       <div class="callout" id="callout"></div>
@@ -133,31 +145,32 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);font-si
     <p>European jet fuel roughly doubled after the Strait of Hormuz disruption in early 2026, and most carriers were hedged only into summer 2026. Ryanair has warned that European fares could rise 10–20% in 2027 and that weaker airlines may fail. Volotea filed for pre-insolvency protection in Barcelona on 29 September 2026, citing an estimated €150M fuel impact, and plans to shrink from 44 to 30–35 A320s.</p>
     <p>For a lessor, that is credit risk and asset risk arriving together: aircraft come back exactly when more of them are coming back.</p>
     <h2 style="margin-top:22px">Method</h2>
-    <p>Monthly cash flows over 60 lease months, 8,000 paths per lessee. Each path draws one fuel scenario that sets default probability, re-lease rent, downtime and residual value together. On default, rent stops, a repossession and transition cost is paid (median $1.0M), the aircraft sits idle, then is re-leased at a lower rent. Maintenance reserves are pass-through; returns are unlevered. The 20,000-path Python model behind the PDF gives the same results within sampling noise.</p>
+    <p>Monthly cash flows over 60 lease months, 8,000 paths per lessee, unlevered. Each path draws one fuel scenario that sets default probability, re-lease rent, downtime and residual value together. On default, rent stops and the lessor keeps the security deposit against a repossession and transition cost of median $1.0M; the aircraft sits idle, then is re-leased at a lower rent. The residual is floored at a part-out value. Maintenance reserves are pass-through: on a distressed return they are largely consumed by the return-condition shortfall. The 20,000-path Python model behind the PDF gives the same results within sampling noise.</p>
   </div>
   <div>
     <h2>Scenarios</h2>
-    <table class="sc">
+    <div class="scwrap"><table class="sc">
       <thead><tr><th>Fuel</th><th>Prob.</th><th>PD IAG</th><th>PD Volotea</th><th>Re-lease</th><th>Downtime</th><th>Residual</th></tr></thead>
       <tbody id="sc"></tbody>
-    </table>
+    </table></div>
     <h2 style="margin-top:22px">Anchors and limits</h2>
     <ul>
       <li>$17M at $215k/month implies a ~1.26% lease rate factor, consistent with IBA's ~$220k rent for a 12-year-old A320ceo (Q3 2026).</li>
       <li>Default rates follow S&amp;P long-run studies by rating; IAG is BBB (S&amp;P, Fitch) and Baa3 (Moody's).</li>
       <li>Remarketing: most lessors re-place aircraft in 3–6 months, a quarter take 6–12 (industry survey).</li>
-      <li>Scenario probabilities are judgement. Appraiser data, deposits and letters of credit, and leverage are natural extensions.</li>
+      <li>The part-out floor rarely binds: tail losses come from lost rent, downtime and repossession early in the lease. An owner that can extend CFM56-5B life in-house, as WLFC now can with CFM, should carry a higher floor; try $8M.</li>
+      <li>Scenario probabilities are judgement. Maintenance-condition risk, leverage and a portfolio view are natural extensions.</li>
     </ul>
   </div>
 </section>
 
-<footer>Emanuele Ospina · emanueleospina.github.io · Sources: IBA via ACMI World; Avialinker; S&amp;P Global Ratings default studies; IAG investor relations; Migflug; Ulysse; Travel Daily News; Spotmedia; JD Supra.</footer>
+<footer>Emanuele Ospina · emanueleospina.github.io · Sources: IBA via ACMI World; Avialinker; S&amp;P Global Ratings default studies; Safe Fly Aviation; WLFC/CFM (Feb 2026); IAG investor relations; Migflug; Ulysse; Travel Daily News; Spotmedia; JD Supra.</footer>
 </div>
 
 <script>
 (()=>{
-const T=60,N=8000,HURDLE=0.07,RENT_IAG=215e3,REPO=1.0e6;
-const BASE={price:17,rentv:240,pspike:20,pdv:12,resid:11,corr:true};
+const T=60,N=8000,HURDLE=0.07,RENT_IAG=215e3,REPO=1.0e6,IAG_PRICE=17e6;
+const BASE={price:17,rentv:240,pspike:20,pdv:12,resid:11,floor:6,dep:3,corr:true};
 let S={...BASE};
 const $=id=>document.getElementById(id);
 
@@ -178,13 +191,14 @@ function irr(cf){let lo=-0.05,hi=0.10;
   return Math.pow(1+(lo+hi)/2,12)-1}
 
 function simulate(lessee,price,rent,n=N,seed=42){
+  const depM=lessee==="iag"?1:S.dep,floor=S.floor*1e6;
   const r=rng(seed),sc=scen(),out=new Float64Array(n);let defs=0;const cf=new Float64Array(T+1);
   for(let j=0;j<n;j++){
     const s0=pick(r,sc);
     const sp=S.corr?s0:pick(r,sc),sh=S.corr?s0:pick(r,sc),sr=S.corr?s0:pick(r,sc),sd=S.corr?s0:pick(r,sc);
     const pd=lessee==="iag"?sc[sp].pdI:sc[sp].pdV;
     const hc=sc[sh].hc+0.05*normal(r);
-    const resid=sc[sr].res*Math.exp(0.15*normal(r));
+    const resid=Math.max(floor,sc[sr].res*Math.exp(0.15*normal(r)));
     const down=Math.min(24,Math.max(1,Math.round(sc[sd].down*Math.exp(0.35*normal(r)))));
     const repo=REPO*Math.exp(0.4*normal(r));
     const h=1-Math.pow(1-pd,1/12);
@@ -195,7 +209,7 @@ function simulate(lessee,price,rent,n=N,seed=42){
       let c=0;
       if(m<tau)c+=rent;
       else if(def&&m>=tau+down)c+=rent*(1+hc);
-      if(def&&m===tau)c-=repo;
+      if(def&&m===tau)c-=repo-depM*rent;
       if(m===T)c+=resid;
       cf[m]=c}
     out[j]=irr(cf)}
@@ -212,9 +226,10 @@ let last=null;
 
 function run(){
   const price=S.price*1e6, rv=S.rentv*1e3;
-  const a=simulate("iag",price,RENT_IAG), v=simulate("vol",price,rv);
+  const a=simulate("iag",IAG_PRICE,RENT_IAG), v=simulate("vol",price,rv);
   const A=summarize(a.irr),V=summarize(v.irr);
   last={a,v,A,V};
+  $("vh").textContent="Volotea at $"+S.price.toFixed(1)+"M";
   draw(a.irr,v.irr,A,V);
   $("stats").innerHTML=[
     ["Monthly rent","$215k","$"+S.rentv+"k"],
@@ -227,19 +242,20 @@ function run(){
   ].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td class="${r[3]?'bad':''}">${r[2]}</td></tr>`).join("");
   const gap=(A.p5-V.p5)*100;
   $("callout").innerHTML = gap>0.3
-    ? `At <b>$${S.price.toFixed(1)}M</b>, the Volotea lease's 5th-percentile return is <b>${gap.toFixed(1)} points</b> below IAG's. ${S.corr?"Switch to <i>Independent</i> to see how much of that tail comes from fuel correlating the risks.":"Switch back to <i>Fuel as common factor</i>: treating the risks as independent makes the tail look safer than it is."}`
+    ? `Bought at <b>$${S.price.toFixed(1)}M</b>, the Volotea lease's 5th-percentile return is <b>${gap.toFixed(1)} points</b> below the IAG lease at $17.0M. ${S.corr?"Switch to <i>Independent</i> to see how much of that tail comes from fuel correlating the risks.":"Switch back to <i>Fuel as common factor</i>: treating the risks as independent makes the tail look safer than it is."}`
     : `At these assumptions the Volotea lease's tail is no worse than IAG's. The premium or discount is doing its job.`;
   $("sc").innerHTML=scen().map(s=>`<tr><td>${s.name}</td><td>${(s.p*100).toFixed(0)}%</td><td>${(s.pdI*100).toFixed(1)}%</td><td>${(s.pdV*100).toFixed(0)}%</td><td>${(s.hc*100).toFixed(0)}%</td><td>${s.down} mo</td><td>$${(s.res/1e6).toFixed(1)}M</td></tr>`).join("");
 }
 
 function draw(a,v,A,V){
-  const W=760,H=300,m={l:12,r:12,t:16,b:30},lo=-12,hi=22,nb=68,bw=(hi-lo)/nb;
+  const q99=x=>{const t=Float64Array.from(x).sort();return t[Math.floor(.995*t.length)]*100};
+  const W=760,H=300,m={l:12,r:12,t:16,b:30},lo=-12,hi=Math.max(22,Math.ceil((Math.max(q99(a),q99(v))+2)/5)*5),bw=0.5,nb=Math.round((hi-lo)/bw);
   const bin=x=>{const c=new Array(nb).fill(0);for(const y of x){const i=Math.floor((y*100-lo)/bw);if(i>=0&&i<nb)c[i]++}return c.map(k=>k/x.length)};
   const ca=bin(a),cv=bin(v),ymax=Math.max(...ca,...cv)*1.12;
   const X=p=>m.l+(p-lo)/(hi-lo)*(W-m.l-m.r), Y=d=>H-m.b-d/ymax*(H-m.t-m.b);
   const path=c=>{let s=`M${X(lo)},${Y(0)}`;c.forEach((d,i)=>{s+=`L${X(lo+i*bw)},${Y(d)}L${X(lo+(i+1)*bw)},${Y(d)}`});return s+`L${X(hi)},${Y(0)}`};
   let g=`<g class="axis"><line x1="${m.l}" x2="${W-m.r}" y1="${H-m.b}" y2="${H-m.b}"/>`;
-  for(let t=-10;t<=20;t+=5)g+=`<line x1="${X(t)}" x2="${X(t)}" y1="${H-m.b}" y2="${H-m.b+4}"/><text x="${X(t)}" y="${H-m.b+17}" text-anchor="middle">${t}%</text>`;
+  for(let t=-10;t<=hi-2;t+=5)g+=`<line x1="${X(t)}" x2="${X(t)}" y1="${H-m.b}" y2="${H-m.b+4}"/><text x="${X(t)}" y="${H-m.b+17}" text-anchor="middle">${t}%</text>`;
   g+=`</g>`;
   g+=`<path d="${path(ca)}Z" fill="var(--iag-fill)"/><path d="${path(cv)}Z" fill="var(--vol-fill)"/>`;
   g+=`<path d="${path(ca)}" fill="none" stroke="var(--iag)" stroke-width="2"/><path d="${path(cv)}" fill="none" stroke="var(--vol)" stroke-width="2"/>`;
@@ -265,18 +281,19 @@ function draw(a,v,A,V){
 function solvePrice(){
   const btn=$("solve");btn.textContent="Solving…";btn.disabled=true;
   setTimeout(()=>{
-    const n=3000,target=summarize(simulate("iag",S.price*1e6,RENT_IAG,n,7).irr).p5;
+    const target=summarize(simulate("iag",IAG_PRICE,RENT_IAG).irr).p5, from=S.price;
     let lo=5e6,hi=30e6;
-    for(let k=0;k<22;k++){const mid=(lo+hi)/2;
-      const p5=summarize(simulate("vol",mid,S.rentv*1e3,n,7).irr).p5;
+    for(let k=0;k<16;k++){const mid=(lo+hi)/2;
+      const p5=summarize(simulate("vol",mid,S.rentv*1e3).irr).p5;
       if(p5>target)lo=mid;else hi=mid}
-    const p=(lo+hi)/2,disc=1-p/(S.price*1e6);
+    const p=(lo+hi)/2,disc=1-p/(from*1e6);
     btn.disabled=false;btn.textContent="Solve: price that matches IAG's tail";
-    $("callout").innerHTML=`To give the Volotea lease the same 5th-percentile return as IAG at $${S.price.toFixed(1)}M, a buyer would pay about <b>$${(p/1e6).toFixed(1)}M</b>, a <b>${(disc*100).toFixed(0)}% ${disc>=0?"discount":"premium"}</b>.`;
+    S.price=Math.round(p/1e5)/10;sync();run();
+    $("callout").innerHTML=`Entry price moved from $${from.toFixed(1)}M to <b>$${(p/1e6).toFixed(1)}M</b>, a <b>${(Math.abs(disc)*100).toFixed(0)}% ${disc>=0?"discount":"premium"}</b>. The two dashed 5th-percentile lines now sit together: the distressed lease, bought cheaper, carries the same tail as the IAG lease at $17.0M.`;
   },30);
 }
 
-const ctrls={price:v=>"$"+(+v).toFixed(1)+"M",rentv:v=>"$"+v+"k",pspike:v=>v+"%",pdv:v=>v+"%",resid:v=>"$"+(+v).toFixed(1)+"M"};
+const ctrls={price:v=>"$"+(+v).toFixed(1)+"M",rentv:v=>"$"+v+"k",pspike:v=>v+"%",pdv:v=>v+"%",resid:v=>"$"+(+v).toFixed(1)+"M",floor:v=>"$"+(+v).toFixed(1)+"M",dep:v=>v+" mo"};
 let pending=null;
 function schedule(){$("chartwrap").classList.add("busy");clearTimeout(pending);pending=setTimeout(()=>{run();$("chartwrap").classList.remove("busy")},60)}
 function sync(){for(const k in ctrls){$(k).value=S[k];$(k+"-v").textContent=ctrls[k](S[k])}
